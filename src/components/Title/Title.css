@@ -1,15 +1,15 @@
 .title-name {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 600;
     color: black;
     line-height: 48px;
-    margin: 20px 4px 10px;
+    margin: 20px 0 10px;
 }
 
 .title-text {
     font-size: 15px;
     font-weight: 500;
     color: #625B71;
-    margin: 0 4px;
+    margin: 0;
     line-height: 12px;
 }

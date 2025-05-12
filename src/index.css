@@ -2,3 +2,27 @@ body {
     margin: 0;
     background: linear-gradient(#8e54e9cc 0%, #ffb199cc 75%);
 }
+
+.app-layout {
+    height: 100vh;
+    background: #ffffffa5;
+    padding: 33px 40px;
+    display: flex;
+}
+
+.app-sidebar {
+    width: 338px;
+    flex-shrink: 0;
+}
+
+.app-content {
+    flex: 1;
+    padding: 30px 30px 75px 50px;
+}
+
+.training-cards {
+    display: grid;
+    grid-template-columns:  repeat(auto-fit, minmax(250px, 290px));
+    gap: 30px;
+    margin-top: 40px;
+}

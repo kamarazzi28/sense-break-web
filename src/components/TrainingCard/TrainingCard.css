@@ -1,0 +1,31 @@
+.training-card {
+    background-color: white;
+    border-radius: 25px;
+    padding: 24px;
+    width: 290px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.training-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    color: #1C1B1F;
+}
+
+.training-description {
+    font-size: 14px;
+    color: #625B71;
+    font-weight: 500;
+    margin: 0;
+}
+
+.training-duration {
+    font-size: 14px;
+    color: #625B71;
+    font-weight: 500;
+    margin: 0 0 8px 0;
+}

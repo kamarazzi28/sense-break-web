@@ -36,7 +36,7 @@ function Header({name = 'User'}) {
                     <p className="header-date">Today is {formattedDate}</p>
                 </div>
             ) : (
-                <IconButton icon={<ArrowLeftIcon/>} onClick={() => navigate(-1)}/>
+                <IconButton icon={<ArrowLeftIcon/>} onClick={() => navigate('/')}/>
             )}
             <div className="header-right">
                 <IconButton icon={<SearchIcon/>} onClick={() => console.log('Search')}/>
