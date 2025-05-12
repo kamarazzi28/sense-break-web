@@ -1,0 +1,86 @@
+.button {
+    height: 50px;
+    font-size: 17px;
+    font-weight: bold;
+    color: white;
+    line-height: 20px;
+    border-radius: 14px;
+    padding: 10px 60px;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+}
+
+.button:active {
+    transform: scale(0.98);
+}
+
+.button.purple {
+    background-color: #7b3ff2;
+    color: white;
+    border: none;
+}
+
+.button.orange {
+    background-color: #FEA329;
+    color: white;
+    border: none;
+
+}
+
+.button.green {
+    background-color: #45A19E;
+    color: white;
+    border: none;
+}
+
+.button.secondary {
+    background-color: white;
+    color: #65558F;
+    border: 2px solid #65558F;
+}
+
+.button.red {
+    background-color: white;
+    color: #B3261E;
+    border: 2px solid #B3261E;
+}
+
+.button.disabled {
+    background-color: #DCD3D4;
+    color: #948D8f;
+    border: none;
+}
+
+.button.purple:hover {
+    background-color: #6b34d4;
+}
+
+.button.orange:hover {
+    background-color: #e8951b;
+}
+
+.button.green:hover {
+    background-color: #3d8f8c;
+}
+
+.button.secondary:hover {
+    background-color: #f3ecff;
+    border-color: #7b3ff2;
+    color: #7b3ff2;
+}
+
+.button.red:hover {
+    background-color: #ffecec;
+    border-color: #8f1b15;
+    color: #8f1b15;
+}
+
+/* Disabled */
+.button.disabled,
+.button:disabled {
+    background-color: #DCD3D4;
+    color: #948D8f;
+    border: none;
+    cursor: not-allowed;
+}
+
