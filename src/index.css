@@ -26,3 +26,8 @@ body {
     gap: 30px;
     margin-top: 40px;
 }
+
+.small-image-cards {
+    display: grid;
+    grid-template-columns:  repeat(auto-fit, minmax(245px, 265px));
+}
