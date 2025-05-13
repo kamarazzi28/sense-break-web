@@ -31,3 +31,11 @@ body {
     display: grid;
     grid-template-columns:  repeat(auto-fit, minmax(245px, 265px));
 }
+
+.large-image-cards {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    align-items: flex-end;
+
+}

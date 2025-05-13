@@ -4,6 +4,7 @@ import Title from "../../components/Title/Title";
 import ImageCardSmall from "../../components/ImageCard/ImageCardSmall.jsx";
 import {useNavigate} from "react-router-dom";
 import ImageCardLarge from "../../components/ImageCard/ImageCardLarge.jsx";
+import StreakCard from "../../components/StreakCard/StreakCard.jsx";
 
 function Dashboard() {
     const navigate = useNavigate();
@@ -11,19 +12,22 @@ function Dashboard() {
 
     return (
         <>
-            <ImageCardLarge
-                title="It’s Training Time"
-                description={`You're on a ${streak_count}-day streak.\nKeep going to build a healthy habit!`}
-                image="/images/girl/girl_with_streak.png"
-                imageStyle={{
-                    width: '210px',
-                    right: '10px',
-                    bottom: '0'
-                }}
-                buttonText="Start Today’s Session"
-                buttonColor="purple"
-                onClick={() => console.log('Start session')}
-            />
+            <div className="large-image-cards">
+                <ImageCardLarge
+                    title="It’s Training Time"
+                    description={`You're on a ${streak_count}-day streak.\nKeep going to build a healthy habit!`}
+                    image="/images/girl/girl_with_streak.png"
+                    imageStyle={{
+                        width: '210px',
+                        right: '10px',
+                        bottom: '0'
+                    }}
+                    buttonText="Start Today’s Session"
+                    buttonColor="purple"
+                    onClick={() => console.log('Start session')}
+                />
+                <StreakCard streakCount={streak_count}/>
+            </div>
 
             <Title name="Choose training" text=""/>
 
