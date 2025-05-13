@@ -8,6 +8,7 @@ function ImageCardLarge({
                             buttonText = 'Start',
                             buttonColor = 'purple',
                             onClick,
+                            imageStyle = {},
                         }) {
 
     return (
@@ -23,7 +24,7 @@ function ImageCardLarge({
                     <Button name={buttonText} color={buttonColor} onClick={onClick}/>
                 </div>
             </div>
-            <div className="card-image-large"><img src={image} alt="" className="card-image"/></div>
+            <div><img src={image} alt="" className="card-image" style={imageStyle}/></div>
         </div>
     );
 }

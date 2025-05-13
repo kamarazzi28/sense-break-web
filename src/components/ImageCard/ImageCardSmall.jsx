@@ -21,7 +21,7 @@ function ImageCardSmall({
                     ))}
                     {duration && <p className="duration">{duration}</p>}
                 </div>
-                <div className="card-image-small"><img src={image} alt="" className="card-image"/></div>
+                <div><img src={image} alt="" className="card-image"/></div>
             </div>
 
             <div className="card-button">

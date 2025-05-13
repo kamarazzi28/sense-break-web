@@ -1,6 +1,7 @@
 import '../../index.css';
 import Title from "../../components/Title/Title.jsx";
 import TrainingCard from "../../components/TrainingCard/TrainingCard.jsx";
+import ImageCardLarge from "../../components/ImageCard/ImageCardLarge.jsx";
 
 function Hearing() {
     return (
@@ -30,6 +31,19 @@ function Hearing() {
                     buttonColor="orange"
                     onStart={() => console.log('Tone Matching started')}/>
             </div>
+            <ImageCardLarge
+                title="Ambient Noise Session"
+                description={`Take a break with calming sounds.\nUse headphones for a deeper experience.`}
+                image="/images/girl/girl_with_headphones.png"
+                imageStyle={{
+                    height: '250px',
+                    right: '-60px',
+                    bottom: '0'
+                }}
+                buttonText="Start Today’s Session"
+                buttonColor="green"
+                onClick={() => console.log('Start session')}
+            />
         </>
     )
 }
