@@ -1,10 +1,10 @@
-import '../../index.css';
+import '../index.css';
 
-import Title from "../../components/Title/Title";
-import ImageCardSmall from "../../components/ImageCard/ImageCardSmall.jsx";
+import Title from "../components/Title/Title.jsx";
+import ImageCardSmall from "../components/ImageCard/ImageCardSmall.jsx";
 import {useNavigate} from "react-router-dom";
-import ImageCardLarge from "../../components/ImageCard/ImageCardLarge.jsx";
-import StreakCard from "../../components/StreakCard/StreakCard.jsx";
+import ImageCardLarge from "../components/ImageCard/ImageCardLarge.jsx";
+import StreakCard from "../components/StreakCard/StreakCard.jsx";
 
 function Dashboard() {
     const navigate = useNavigate();

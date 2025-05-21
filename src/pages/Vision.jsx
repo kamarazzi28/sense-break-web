@@ -1,7 +1,7 @@
-import '../../index.css';
+import '../index.css';
 
-import TrainingCard from "../../components/TrainingCard/TrainingCard.jsx";
-import Title from "../../components/Title/Title.jsx";
+import TrainingCard from "../components/TrainingCard/TrainingCard.jsx";
+import Title from "../components/Title/Title.jsx";
 
 function Vision() {
     return (

@@ -40,7 +40,7 @@ function Header({name = 'User'}) {
             )}
             <div className="header-right">
                 <IconButton icon={<SearchIcon/>} onClick={() => console.log('Search')}/>
-                <IconButton icon={<UserRoundIcon/>} onClick={() => console.log('Profile')}/>
+                <IconButton icon={<UserRoundIcon/>} onClick={() => navigate('/Login')}/>
             </div>
         </div>
 

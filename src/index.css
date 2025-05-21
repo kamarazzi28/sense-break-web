@@ -1,4 +1,5 @@
 body {
+    height: 100vh;
     margin: 0;
     background: linear-gradient(#8e54e9cc 0%, #ffb199cc 75%);
 }
@@ -35,7 +36,126 @@ body {
 .large-image-cards {
     display: flex;
     flex-direction: row;
-    gap: 40px;
     align-items: flex-end;
+    gap: 20px;
+}
 
+
+.auth-page {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 35px 120px;
+
+}
+
+.auth-right img {
+    width: 500px;
+}
+
+.auth-left {
+    flex: 1;
+    max-width: 450px;
+    padding: 40px 0 30px 0;
+    background-color: #ffffffcc;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.auth-left .logo {
+    width: 50px;
+    margin-bottom: 10px;
+}
+
+.auth-left h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0;
+    text-align: center;
+    line-height: 30px;
+}
+
+.auth-subtitle {
+    font-size: 14px;
+    color: #625B71;
+    margin: 0;
+    text-align: center;
+    line-height: 10px;
+}
+
+.auth-button {
+    margin: 15px 0 0 0;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    padding: 20px 75px;
+}
+
+.recovery-link {
+    font-size: 14px;
+    color: #7b3ff2;
+    text-decoration: none !important;
+    align-self: flex-end;
+    margin-top: 4px;
+}
+
+.recovery-link:hover {
+    text-decoration: none;
+}
+
+.or-text {
+    font-size: 14px;
+    color: #625B71;
+    margin-top: 12px;
+    text-align: center;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.social-icons button {
+    all: unset; /* убираем дефолтные стили кнопки */
+    cursor: pointer;
+    border-radius: 50%;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.social-icons button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 8px rgba(123, 63, 242, 0.3); /* фиолетовая тень */
+}
+
+.social-icons img {
+    width: 50px;
+    display: block;
+}
+
+/* REGISTER LINK */
+
+.signup-text {
+    font-size: 14px;
+    color: #625B71;
+    text-align: center;
+}
+
+.signup-text a {
+    color: #7b3ff2;
+    text-decoration: none !important;
+}
+
+.signup-text a:hover {
+    text-decoration: underline;
 }

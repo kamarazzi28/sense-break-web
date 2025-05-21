@@ -1,7 +1,7 @@
-import '../../index.css';
-import Title from "../../components/Title/Title.jsx";
-import TrainingCard from "../../components/TrainingCard/TrainingCard.jsx";
-import ImageCardLarge from "../../components/ImageCard/ImageCardLarge.jsx";
+import '../index.css';
+import Title from "../components/Title/Title.jsx";
+import TrainingCard from "../components/TrainingCard/TrainingCard.jsx";
+import ImageCardLarge from "../components/ImageCard/ImageCardLarge.jsx";
 
 function Hearing() {
     return (

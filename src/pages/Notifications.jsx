@@ -1,5 +1,5 @@
-import '../../index.css';
-import Title from "../../components/Title/Title.jsx";
+import '../index.css';
+import Title from "../components/Title/Title.jsx";
 
 function Notifications() {
     return (
