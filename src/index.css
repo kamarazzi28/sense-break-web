@@ -135,7 +135,6 @@ form {
 
 .social-icons button:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 8px rgba(123, 63, 242, 0.3); /* фиолетовая тень */
 }
 
 .social-icons img {
@@ -144,7 +143,6 @@ form {
 }
 
 /* REGISTER LINK */
-
 .signup-text {
     font-size: 14px;
     color: #625B71;

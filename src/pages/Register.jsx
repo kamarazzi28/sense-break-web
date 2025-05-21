@@ -2,6 +2,10 @@ import {useState} from 'react';
 import Input from '../components/InputFields/Input';
 import '../index.css';
 import Button from "../components/Button/Button.jsx";
+import {createUserIfNotExists, handleGoogleLogin} from '../firebaseHelpers';
+import {createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';
+import {auth} from '../firebase';
+
 
 function Register() {
     const [email, setEmail] = useState('');
@@ -9,7 +13,6 @@ function Register() {
     const [errors, setErrors] = useState({});
     const [username, setUsername] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-
 
     const validate = () => {
         const newErrors = {};
@@ -20,16 +23,26 @@ function Register() {
         return newErrors;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const validationErrors = validate();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
-        } else {
-            setErrors({});
-            console.log('Login successful!');
+            return;
+        }
+
+        try {
+            const result = await createUserWithEmailAndPassword(auth, email, password);
+            await updateProfile(result.user, {displayName: username});
+            await createUserIfNotExists(result.user);
+            console.log('Registration successful!');
+            // window.location.href = '/dashboard';
+        } catch (error) {
+            console.error(error);
+            setErrors({email: 'Email already in use'});
         }
     };
+
 
     return (
         <div className="auth-page">
@@ -87,12 +100,8 @@ function Register() {
                     <button onClick={handleGoogleLogin}>
                         <img src="/images/figures/google.svg" alt="Google"/>
                     </button>
-                    <button onClick={handleGitHubLogin}>
-                        <img src="/images/figures/github.svg" alt="GitHub"/>
-                    </button>
-                    <button onClick={handleFacebookLogin}>
-                        <img src="/images/figures/facebook.svg" alt="Facebook"/>
-                    </button>
+                    <img src="/images/figures/github.svg" alt="GitHub"/>
+                    <img src="/images/figures/facebook.svg" alt="Facebook"/>
                 </div>
 
                 <p className="signup-text">

@@ -2,6 +2,10 @@ import {useState} from 'react';
 import Input from '../components/InputFields/Input';
 import '../index.css';
 import Button from "../components/Button/Button.jsx";
+import {createUserIfNotExists, handleGoogleLogin} from '../firebaseHelpers';
+import {auth} from '../firebase.js';
+import {signInWithEmailAndPassword} from 'firebase/auth';
+
 
 function Login() {
     const [email, setEmail] = useState('');
@@ -15,14 +19,23 @@ function Login() {
         return newErrors;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const validationErrors = validate();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
-        } else {
-            setErrors({});
+            return;
+        }
+
+        try {
+            const result = await signInWithEmailAndPassword(auth, email, password);
+            await createUserIfNotExists(result.user);
             console.log('Login successful!');
+            // например:
+            // window.location.href = '/dashboard';
+        } catch (error) {
+            console.error(error);
+            setErrors({email: 'Invalid email or password', password: 'Invalid email or password'});
         }
     };
 
@@ -67,12 +80,9 @@ function Login() {
                     <button onClick={handleGoogleLogin}>
                         <img src="/images/figures/google.svg" alt="Google"/>
                     </button>
-                    <button onClick={handleGitHubLogin}>
-                        <img src="/images/figures/github.svg" alt="GitHub"/>
-                    </button>
-                    <button onClick={handleFacebookLogin}>
-                        <img src="/images/figures/facebook.svg" alt="Facebook"/>
-                    </button>
+                    <img src="/images/figures/github.svg" alt="GitHub"/>
+                    <img src="/images/figures/facebook.svg" alt="Facebook"/>
+
                 </div>
 
 
