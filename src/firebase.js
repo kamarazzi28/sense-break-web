@@ -4,14 +4,14 @@ import {getAuth, GoogleAuthProvider} from 'firebase/auth';
 import {getFirestore} from 'firebase/firestore';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCA1ID4pMO0T-BBun_QCJW6BFwCYsK1ao",
-    authDomain: "sense-break7.firebaseapp.com",
-    projectId: "sense-break7",
-    storageBucket: "sense-break7.appspot.com",
-    messagingSenderId: "710329466038",
-    appId: "1:710329466038:web:55566c6bb872a7ea543013f",
-    measurementId: "G-ZFRZGWRDR2"
+    apiKey: "AIzaSyBq-XWt_cPfRb59jQ_sjluCp_ewkHOAQUA",
+    authDomain: "sense-break-2025.firebaseapp.com",
+    projectId: "sense-break-2025",
+    storageBucket: "sense-break-2025.firebasestorage.app",
+    messagingSenderId: "138551325557",
+    appId: "1:138551325557:web:3c40659644c3d6f82bd93c"
 };
+
 
 const app = initializeApp(firebaseConfig);
 
