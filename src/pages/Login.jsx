@@ -5,9 +5,11 @@ import Button from "../components/Button/Button.jsx";
 import {createUserIfNotExists, handleGoogleLogin} from '../firebaseHelpers';
 import {auth} from '../firebase.js';
 import {signInWithEmailAndPassword} from 'firebase/auth';
+import {useNavigate} from "react-router-dom";
 
 
 function Login() {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
@@ -30,9 +32,7 @@ function Login() {
         try {
             const result = await signInWithEmailAndPassword(auth, email, password);
             await createUserIfNotExists(result.user);
-            console.log('Login successful!');
-            // например:
-            // window.location.href = '/dashboard';
+            navigate('/');
         } catch (error) {
             console.error(error);
             setErrors({email: 'Invalid email or password', password: 'Invalid email or password'});

@@ -5,9 +5,11 @@ import Button from "../components/Button/Button.jsx";
 import {createUserIfNotExists, handleGoogleLogin} from '../firebaseHelpers';
 import {createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';
 import {auth} from '../firebase';
+import {useNavigate} from "react-router-dom";
 
 
 function Register() {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
@@ -35,8 +37,7 @@ function Register() {
             const result = await createUserWithEmailAndPassword(auth, email, password);
             await updateProfile(result.user, {displayName: username});
             await createUserIfNotExists(result.user);
-            console.log('Registration successful!');
-            // window.location.href = '/dashboard';
+            navigate('/');
         } catch (error) {
             console.error(error);
             setErrors({email: 'Email already in use'});

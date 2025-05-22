@@ -6,11 +6,13 @@ import '../index.css';
 function Layout() {
     return (
         <div className="app-layout">
-            <Sidebar/>
-            <main className="app-content">
+            <div className="app-sidebar">
+                <Sidebar/>
+            </div>
+            <div className="app-scroll-container">
                 <Header name="Kami"/>
                 <Outlet/>
-            </main>
+            </div>
         </div>
     );
 }

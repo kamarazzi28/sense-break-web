@@ -9,16 +9,25 @@ body {
     background: #ffffffa5;
     padding: 33px 40px;
     display: flex;
+    overflow: hidden;
 }
 
 .app-sidebar {
     width: 338px;
     flex-shrink: 0;
+    height: 100vh;
+    overflow: hidden;
 }
 
-.app-content {
+.app-scroll-container {
     flex: 1;
-    padding: 30px 30px 75px 50px;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 30px 30px 90px 50px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    scrollbar-width: none;
 }
 
 .training-cards {
@@ -39,7 +48,6 @@ body {
     align-items: flex-end;
     gap: 20px;
 }
-
 
 .auth-page {
     display: flex;

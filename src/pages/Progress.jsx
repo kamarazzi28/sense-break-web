@@ -6,7 +6,7 @@ function Progress() {
         <>
             <Title
                 name="Your Progress"
-                text={`TGreat job staying consistent! 
+                text={`Great job staying consistent! 
                 \nKeep going and turn your short sessions into a healthy daily habit.`}
             />
         </>
