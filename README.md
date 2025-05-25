@@ -6,7 +6,7 @@
 
 ## 🎯 Cíl projektu
 
-Vytvořit webovou aplikaci pro trénink zraku a sluchu pomocí technologií HTML5, CSS3 a JavaScriptu (React). Aplikace slouží uživatelům, kteří tráví mnoho času u počítače a potřebují preventivní trénink zraku a sluchu formou krátkých interaktivních cvičení.
+Webová aplikace pro každodenní trénink zraku a sluchu formou krátkých interaktivních cvičení. Vhodná zejména pro uživatele, kteří tráví hodně času u počítače. Aplikace nabízí gamifikovaný přístup k tréninku, přehled výsledků, streak systém a notifikace.
 
 ---
 
@@ -16,74 +16,88 @@ Vytvořit webovou aplikaci pro trénink zraku a sluchu pomocí technologií HTML
 
 ---
 
-## 📋 Funkcionalita aplikace
+## 🌐 Nasazení aplikace
 
-- 🧾 Registrace a přihlášení uživatele (formulář s validací)
-- 👁️ Zrakový trénink (animace objektu v Canvas/SVG)
-- 🔊 Sluchový trénink (audio test s přehráváním a vyhodnocením)
-- 📈 Výsledky a historie tréninků (uložené v LocalStorage)
-- 🔔 Notifikace – připomenutí tréninku (push pop-up)
-- 📴 Detekce offline režimu
-- 📱 Responzivní design pro mobilní zařízení
+Aplikace je nasazena pomocí Firebase Hosting:  
+🔗 [https://sense-break-2025.web.app](https://sense-break-2025.web.app)
+
+---
+
+## 📋 Funkcionalita
+
+- 🧾 Registrace & přihlášení (Firebase Authentication, Google Login)
+- 👁️ Zrakový trénink (Canvas nebo SVG animace)
+- 🔊 Sluchový trénink (Audio API, rozpoznávání tónů)
+- 📈 Přehled pokroku, streak systém
+- 🔔 Notifikace – připomenutí tréninku
+- 🌐 Detekce offline režimu
+- 🎨 Responzivní design (desktop, tablet, mobil)
+- 🖼️ Nahrání a správa avatara (Firebase Storage)
+- 🛠️ Nastavení účtu (username, avatar, gender)
 
 ---
 
 ## 🛠️ Použité technologie
 
 - **React + Vite**
-- **React Router** – více stránek (SPA)
-- **Tailwind CSS** – stylování a responzivita
-- **Canvas nebo SVG** – vykreslení tréninků
-- **Audio API** – přehrávání zvuků
-- **LocalStorage** – ukládání výsledků
-- **Service Worker / navigator.onLine** – offline režim
-- **HTML5, CSS3, JS (OOP)** – plné využití moderních webových technologií
+- **React Router (SPA)**
+- **Material UI (MUI)** – komponenty a ikony
+- **Firebase**
+  - 🔐 Authentication (email + Google login)
+  - 🧠 Firestore – ukládání údajů o uživateli (např. streak, jméno)
+  - 🚀 Hosting – nasazení aplikace
+- **Canvas / SVG** – vykreslení tréninků
+- **Audio API** – přehrávání tónů
+- **HTML5, CSS3, JS (OOP)**
+- **Service Worker / `navigator.onLine`**
 
----
-
-## ✅ Hodnocené prvky dle KAJ
-
-| Kategorie         | Popis                                    | Splněno |
-|------------------|-------------------------------------------|------|
-| Dokumentace       | README, popis, komentáře ve zdrojáku     |      |
-| HTML5             | Validita, sémantika, SVG/Canvas, audio   |     |
-| Formuláře         | Validace, typy, placeholder, autofocus    |    |
-| CSS3              | Pokročilé selektory, animace, MQ         |     |
-| JS – OOP          | Třídy, prototypy                          |    |
-| JS – API          | LocalStorage, Audio API, History API     |     |
-| Offline podpora   | navigator.onLine, (volitelně SW)         |     |
-| Estetika + SPA    | Přehledné UI, responzivita               |     |
-
----
 
 ## 🧱 Struktura projektu
 
 ```plaintext
 sense-break-kaj/
+├── .firebase/                # Firebase konfigurace
 ├── public/
-│   └── index.html
+│   ├── images/
+│   │   ├── figures/
+│   │   ├── girl/
+│   │   └── logo/
+│   └── sb_logo.svg
 ├── src/
-│   ├── assets/               # obrázky, zvuky, SVG
-│   ├── components/           # UI komponenty (Header, Button...)
-│   ├── pages/                # jednotlivé obrazovky
-│   │   ├── Home.jsx
+│   ├── components/           # Reuse komponenty
+│   │   ├── AvatarPreview/
+│   │   ├── Button/
+│   │   ├── CustomSelect/
+│   │   ├── DatePicker/
+│   │   ├── FeatureRow/
+│   │   ├── Header/
+│   │   ├── IconButton/
+│   │   ├── ImageCard/
+│   │   ├── InputFields/
+│   │   ├── Modal/
+│   │   ├── PrivateRoute/
+│   │   ├── Sidebar/
+│   │   ├── StreakCard/
+│   │   ├── Title/
+│   │   ├── Toggle/
+│   │   └── ... další UI komponenty
+│   ├── pages/
+│   │   ├── AccountSettings.jsx
+│   │   ├── Dashboard.jsx
+│   │   ├── Hearing.jsx
+│   │   ├── Layout.jsx
 │   │   ├── Login.jsx
-│   │   ├── Register.jsx
-│   │   ├── Training.jsx
-│   │   ├── Results.jsx
-│   │   └── History.jsx
-│   ├── services/             # API + LocalStorage logika
-│   ├── App.jsx
-│   ├── main.jsx
-│   └── index.css
-├── mock/                     # volitelné mock datové soubory
-├── README.md
-└── package.json
+│   │   ├── Notifications.jsx
+│   │   ├── Progress.jsx
+│   │   └── Register.jsx
+│   ├── App.jsx               # Kořenová komponenta
+│   ├── firebase.js           # Firebase config
+│   ├── firebaseHelpers.js    # Auth + Firestore helpers
+│   ├── index.css             # Globální styly
+│   ├── main.jsx              # Entry point
+│   ├── Layout.jsx            # Rozvržení stránky
+│   └── theme.js
+├── dist/                     # Vygenerovaný build
+├── package.json
+└── README.md
 ```
----
-
-## 📜 Licence
-
-Projekt je určen pouze pro studijní účely v rámci kurzu B0B39KAJ na FEL ČVUT.
-
----
