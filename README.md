@@ -19,7 +19,7 @@ Webová aplikace pro každodenní trénink zraku a sluchu formou krátkých inte
 ## 🌐 Nasazení aplikace
 
 Aplikace je nasazena pomocí Firebase Hosting:  
-🔗 [https://sense-break-2025.web.app/login](https://sense-break-2025.web.app/login)
+🔗 [https://sense-break-2025.web.app](https://sense-break-2025.web.app)
 
 ---
 
@@ -55,28 +55,49 @@ Aplikace je nasazena pomocí Firebase Hosting:
 ## 🧱 Struktura projektu
 
 ```plaintext
-sense-break/
+sense-break-kaj/
+├── .firebase/                # Firebase konfigurace
 ├── public/
-│   └── index.html
+│   ├── images/
+│   │   ├── figures/
+│   │   ├── girl/
+│   │   └── logo/
+│   └── sb_logo.svg
 ├── src/
-│   ├── components/
+│   ├── components/           # Reuse komponenty
 │   │   ├── AvatarPreview/
 │   │   ├── Button/
+│   │   ├── CustomSelect/
+│   │   ├── DatePicker/
+│   │   ├── FeatureRow/
 │   │   ├── Header/
+│   │   ├── IconButton/
+│   │   ├── ImageCard/
+│   │   ├── InputFields/
+│   │   ├── Modal/
+│   │   ├── PrivateRoute/
 │   │   ├── Sidebar/
+│   │   ├── StreakCard/
+│   │   ├── Title/
+│   │   ├── Toggle/
 │   │   └── ... další UI komponenty
 │   ├── pages/
+│   │   ├── AccountSettings.jsx
 │   │   ├── Dashboard.jsx
-│   │   ├── Vision.jsx
 │   │   ├── Hearing.jsx
-│   │   ├── Login.jsx / Register.jsx
-│   │   └── Settings.jsx
+│   │   ├── Layout.jsx
+│   │   ├── Login.jsx
+│   │   ├── Notifications.jsx
+│   │   ├── Progress.jsx
+│   │   └── Register.jsx
+│   ├── App.jsx               # Kořenová komponenta
 │   ├── firebase.js           # Firebase config
 │   ├── firebaseHelpers.js    # Auth + Firestore helpers
-│   ├── App.jsx               # Kořenová komponenta
-│   ├── Layout.jsx            # Rozvržení stránky
 │   ├── index.css             # Globální styly
-│   └── main.jsx              # Entry point
-├── README.md
-└── package.json
+│   ├── main.jsx              # Entry point
+│   ├── Layout.jsx            # Rozvržení stránky
+│   └── theme.js
+├── dist/                     # Vygenerovaný build
+├── package.json
+└── README.md
 ```
