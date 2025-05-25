@@ -8,6 +8,7 @@ import Notifications from './pages/Notifications.jsx';
 import Settings from './pages/Settings.jsx';
 import Login from './pages/Login.jsx';
 import Register from "./pages/Register.jsx";
+import AccountSettings from "./pages/AccountSettings.jsx";
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
                 <Route path="progress" element={<Progress/>}/>
                 <Route path="notifications" element={<Notifications/>}/>
                 <Route path="settings" element={<Settings/>}/>
+                <Route path="accountSettings" element={<AccountSettings/>}/>
             </Route>
         </Routes>
     );
