@@ -96,8 +96,6 @@ function Login() {
                     <button onClick={handleGoogleLogin}>
                         <img src="/images/figures/google.svg" alt="Google"/>
                     </button>
-                    <img src="/images/figures/github.svg" alt="GitHub"/>
-                    <img src="/images/figures/facebook.svg" alt="Facebook"/>
                 </div>
 
                 <p className="signup-text">
