@@ -1,15 +1,23 @@
 .sidebar {
-    width: 338px;
-    height: auto;
-    padding: 30px 40px;
+    width: 320px;
+    height: 100%;
+    padding: 30px 30px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     background-color: #ffffff4c;
     border-radius: 12px;
-
+    position: relative;
+    transition: all 0.3s ease;
 }
 
+/* свернутое состояние контейнера */
+.sidebar-wrapper.collapsed .sidebar {
+    width: 80px;
+    align-items: center !important;
+}
+
+/* заголовок */
 .sidebar-title {
     display: flex;
     align-items: center;
@@ -17,6 +25,13 @@
     font-weight: 600;
     font-size: 20px;
     line-height: 20px;
+}
+
+/* header с кнопкой */
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 30px;
 }
 
@@ -25,14 +40,21 @@
     height: 50px;
 }
 
+/* группа кнопок */
 .sidebar-buttons {
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin-bottom: 270px;
-
 }
 
+/* нижняя кнопка (settings) */
+.sidebar-settings {
+    display: flex;
+    flex-direction: column;
+}
+
+/* кнопки */
 .sidebar-btn {
     width: 260px !important;
     height: 60px !important;
@@ -48,11 +70,13 @@
     transition: none !important;
 }
 
+/* hover */
 .sidebar-btn:hover {
     background-color: rgba(98, 91, 113, 0.08) !important;
     border-radius: 14px;
 }
 
+/* активная */
 .sidebar-btn.active {
     background-color: white !important;
     color: #1C1B1F !important;
@@ -61,6 +85,7 @@
     transform: scale(0.98);
 }
 
+/* иконки */
 .sidebar-btn svg {
     color: #625B71 !important;
 }
@@ -69,4 +94,71 @@
     color: #4F378A !important;
 }
 
+/* collapse/expand button */
+.collapse-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #4F378A;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+    padding: 4px;
+    display: flex;
+    align-items: center !important;
+    justify-content: center !important;
+}
 
+.collapse-btn:hover {
+    opacity: 1;
+}
+
+/* свернутое состояние кнопок */
+.sidebar-wrapper.collapsed .sidebar-btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 60px !important;
+    height: 60px !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    border-radius: 16px !important;
+}
+
+/* удаляем отступ между иконкой и текстом */
+.sidebar-wrapper.collapsed .MuiButton-startIcon {
+    margin: 0 !important;
+}
+
+/* стили активной кнопки в свернутом sidebar */
+.sidebar-wrapper.collapsed .sidebar-btn.active {
+    width: 60px !important;
+    height: 60px !important;
+    border-radius: 16px !important;
+    transform: none !important;
+}
+
+/* адаптивность */
+@media (max-width: 1024px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        z-index: 999;
+        box-shadow: 2px 0 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar-wrapper.collapsed .sidebar {
+        width: 60px;
+        padding: 20px 10px;
+    }
+
+    .sidebar-wrapper.collapsed .sidebar-btn {
+        min-width: 40px;
+    }
+
+    .sidebar-wrapper.collapsed .sidebar-logo {
+        width: 40px;
+        height: 40px;
+    }
+}
