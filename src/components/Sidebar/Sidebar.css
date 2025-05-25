@@ -27,6 +27,13 @@
     line-height: 20px;
 }
 
+.sidebar-title span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 160px;
+}
+
 /* header с кнопкой */
 .sidebar-header {
     display: flex;
@@ -137,28 +144,24 @@
     transform: none !important;
 }
 
-/* адаптивность */
+/* ===== MOBILE HANDLING ===== */
 @media (max-width: 1024px) {
-    .sidebar {
+    .sidebar-wrapper {
         position: fixed;
         top: 0;
         left: 0;
         height: 100vh;
-        z-index: 999;
-        box-shadow: 2px 0 12px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        transform: translateX(0);
     }
 
-    .sidebar-wrapper.collapsed .sidebar {
-        width: 60px;
-        padding: 20px 10px;
+    .sidebar-wrapper.collapsed {
+        transform: translateX(-100%);
+        width: 320px; /* возвращаем ширину, чтобы он был широким при open */
     }
 
-    .sidebar-wrapper.collapsed .sidebar-btn {
-        min-width: 40px;
-    }
-
-    .sidebar-wrapper.collapsed .sidebar-logo {
-        width: 40px;
-        height: 40px;
+    .app-scroll-container {
+        padding-left: 30px !important;
+        transform: none !important;
     }
 }

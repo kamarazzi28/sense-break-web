@@ -43,7 +43,7 @@ function Sidebar() {
                     {!collapsed && (
                         <div className="sidebar-title">
                             <img src="/images/logo/sb_logo_with_white_bg.svg" alt="Logo" className="sidebar-logo"/>
-                            <span>Sense Break</span>
+                            {!collapsed && <span>Sense Break</span>}
                         </div>
                     )}
                     <button className="collapse-btn" onClick={() => setCollapsed(!collapsed)}>
