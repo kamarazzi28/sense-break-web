@@ -6,6 +6,9 @@ import {useState} from 'react';
 import dayjs from 'dayjs';
 import CustomSelect from "../components/CustomSelect/CustomSelect.jsx";
 import DatePicker from "../components/DatePicker/DatePicker.jsx";
+import {useNavigate} from "react-router-dom";
+import {getAuth, signOut} from "firebase/auth";
+
 
 function AccountSettings() {
     const [username, setUsername] = useState('Kami');
@@ -37,6 +40,20 @@ function AccountSettings() {
         setDateOfBirth(dayjs('2001-03-28'));
     };
 
+    const auth = getAuth();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        signOut(auth)
+            .then(() => {
+                navigate('/login'); // перенаправление на login
+            })
+            .catch((error) => {
+                console.error('Logout error:', error);
+            });
+    };
+
+
     return (
         <>
             <Title name="Account Settings" text=""/>
@@ -47,7 +64,7 @@ function AccountSettings() {
                         <Button name="Delete Avatar" color="secondary"/>
                         <Button name="Upload New" color="purple"/>
                         <div className="logout-button">
-                            <Button name="Log Out" color="red"/>
+                            <Button name="Log Out" color="red" onClick={handleLogout}/>
                         </div>
                     </div>
                 </div>

@@ -1,12 +1,11 @@
+import {browserSessionPersistence, setPersistence, signInWithEmailAndPassword, signOut} from "firebase/auth";
 import {useState} from 'react';
 import Input from '../components/InputFields/Input';
 import '../index.css';
 import Button from "../components/Button/Button.jsx";
 import {createUserIfNotExists, handleGoogleLogin} from '../firebaseHelpers';
 import {auth} from '../firebase.js';
-import {signInWithEmailAndPassword} from 'firebase/auth';
 import {useNavigate} from "react-router-dom";
-
 
 function Login() {
     const navigate = useNavigate();
@@ -30,14 +29,32 @@ function Login() {
         }
 
         try {
+            await setPersistence(auth, browserSessionPersistence); // можно заменить на local, если хочешь
             const result = await signInWithEmailAndPassword(auth, email, password);
             await createUserIfNotExists(result.user);
+
+            // Сохраняем время входа
+            const loginTime = Date.now();
+            localStorage.setItem('loginTime', loginTime.toString());
+
+            // Запускаем таймер выхода через 1 час (3600000 мс)
+            setTimeout(() => {
+                signOut(auth).then(() => {
+                    console.log('Logged out after 1 hour');
+                    navigate('/login');
+                });
+            }, 60 * 60 * 1000);
+
             navigate('/');
         } catch (error) {
             console.error(error);
-            setErrors({email: 'Invalid email or password', password: 'Invalid email or password'});
+            setErrors({
+                email: 'Invalid email or password',
+                password: 'Invalid email or password'
+            });
         }
     };
+
 
     return (
         <div className="auth-page">
@@ -55,7 +72,6 @@ function Login() {
                         error={errors.email}
                         variant="plain"
                     />
-
                     <Input
                         type="password"
                         placeholder="Password"
@@ -82,9 +98,7 @@ function Login() {
                     </button>
                     <img src="/images/figures/github.svg" alt="GitHub"/>
                     <img src="/images/figures/facebook.svg" alt="Facebook"/>
-
                 </div>
-
 
                 <p className="signup-text">
                     Not a member yet? <a href="/Register">Register now</a>
@@ -94,7 +108,7 @@ function Login() {
                 <img src="/images/girl/girl_jumping.png" alt="Illustration"/>
             </div>
         </div>
-    )
+    );
 }
 
 export default Login;

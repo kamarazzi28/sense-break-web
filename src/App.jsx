@@ -9,6 +9,7 @@ import Settings from './pages/Settings.jsx';
 import Login from './pages/Login.jsx';
 import Register from "./pages/Register.jsx";
 import AccountSettings from "./pages/AccountSettings.jsx";
+import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx';
 
 function App() {
     return (
@@ -17,8 +18,12 @@ function App() {
             <Route path="/login" element={<Login/>}/>
             <Route path="/register" element={<Register/>}/>
 
-            {/* App routes */}
-            <Route path="/" element={<Layout/>}>
+            {/* Protected app routes */}
+            <Route path="/" element={
+                <PrivateRoute>
+                    <Layout/>
+                </PrivateRoute>
+            }>
                 <Route index element={<Dashboard/>}/>
                 <Route path="vision" element={<Vision/>}/>
                 <Route path="hearing" element={<Hearing/>}/>
