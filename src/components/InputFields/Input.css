@@ -22,6 +22,7 @@
 }
 
 /* Variants */
+
 .input-wrapper.outlined .input-field {
     border: 2px solid #65558F;
 }
@@ -37,10 +38,10 @@
     border-radius: 0;
 }
 
-/* Disabled */
 .input-wrapper.disabled .input-field {
-    background-color: #DCD3D4;
+    background-color: #E3E3E4;
     color: #948D8f;
+    border: 2px solid #E3E3E4;
     cursor: not-allowed;
 }
 
@@ -61,3 +62,4 @@
     color: #625B71;
     margin-left: 3px;
 }
+
