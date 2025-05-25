@@ -7,18 +7,18 @@ import {createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';
 import {auth} from '../firebase';
 import {useNavigate} from "react-router-dom";
 
-
 function Register() {
     const navigate = useNavigate();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [errors, setErrors] = useState({});
-    const [username, setUsername] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [username, setUsername] = useState('');
+    const [errors, setErrors] = useState({});
 
     const validate = () => {
         const newErrors = {};
-        if (username.length < 3) newErrors.username = 'Name must be 2–18 letters (A–Z, a–z)';
+        if (username.length < 3) newErrors.username = 'Name must be 3+ characters';
         if (!email.includes('@')) newErrors.email = 'Please enter a valid email address';
         if (password.length < 6) newErrors.password = 'Password too short';
         if (confirmPassword !== password) newErrors.confirmPassword = 'Passwords do not match';
@@ -36,14 +36,13 @@ function Register() {
         try {
             const result = await createUserWithEmailAndPassword(auth, email, password);
             await updateProfile(result.user, {displayName: username});
-            await createUserIfNotExists(result.user);
+            await createUserIfNotExists(result.user, username);
             navigate('/');
         } catch (error) {
             console.error(error);
             setErrors({email: 'Email already in use'});
         }
     };
-
 
     return (
         <div className="auth-page">
@@ -69,7 +68,6 @@ function Register() {
                         error={errors.email}
                         variant="plain"
                     />
-
                     <Input
                         type="password"
                         placeholder="Password"
@@ -86,12 +84,9 @@ function Register() {
                         error={errors.confirmPassword}
                         variant="plain"
                     />
+
                     <div className="auth-button">
-                        <Button
-                            name="Sign up"
-                            color="orange"
-                            type="submit"
-                        />
+                        <Button name="Sign up" color="orange" type="submit"/>
                     </div>
                 </form>
 
@@ -109,13 +104,12 @@ function Register() {
                     Joined before? <a href="/Login">Login</a>
                 </p>
             </div>
+
             <div className="auth-right">
                 <img src="/images/girl/girl_registration.png" alt="Illustration"/>
             </div>
-
-
         </div>
-    )
+    );
 }
 
 export default Register;
