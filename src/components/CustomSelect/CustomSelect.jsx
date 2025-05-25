@@ -64,7 +64,7 @@ function CustomSelect({
                         fontWeight: variant === 'input' ? 500 : 'normal',
                         paddingRight: variant === 'input' ? '40px' : 'inherit',
                         '& .MuiOutlinedInput-notchedOutline': {
-                            borderWidth: '2px',
+                            borderWidth: '1px',
                             borderColor: variant === 'input' ? '#65558F' : '#625B71'
                         },
                         '&:hover .MuiOutlinedInput-notchedOutline': {
@@ -72,7 +72,7 @@ function CustomSelect({
                         },
                         '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                             borderColor: '#7b3ff2',
-                            borderWidth: '2px'
+                            borderWidth: '1px'
                         },
                         '& .MuiSelect-icon': {
                             cursor: 'pointer',

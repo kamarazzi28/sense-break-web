@@ -40,13 +40,13 @@
 .button.secondary {
     background-color: white;
     color: #65558F;
-    border: 2px solid #65558F;
+    border: 1.5px solid #65558F;
 }
 
 .button.red {
     background-color: white;
     color: #B3261E;
-    border: 2px solid #B3261E;
+    border: 1.5px solid #B3261E;
 }
 
 .button.disabled {
@@ -68,7 +68,7 @@
 }
 
 .button.secondary:hover {
-    background-color: #f3ecff;
+    background-color: white;
     border-color: #7b3ff2;
     color: #7b3ff2;
 }

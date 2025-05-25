@@ -166,33 +166,39 @@ form {
 }
 
 .account-group {
+    flex: 0;
     background: rgba(255, 255, 255, 0.3);
     border-radius: 16px;
     padding: 20px;
     display: flex;
     flex-direction: column;
     gap: 20px;
+    justify-content: space-between;
+    width: auto;
 }
 
 .account-settings-container {
     display: flex;
     gap: 20px;
+    align-content: space-evenly;
 }
 
 .account-avatar-box {
-    flex-shrink: 0;
-    width: 200px;
+    display: flex;
+    width: 190px;
+    height: 100%;
     padding: 20px;
     border-radius: 16px;
     background-color: #ffffff;
-    display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
+    flex: 1;
 }
 
 .avatar-preview {
     width: 100px;
+    height: 100px;
     margin-bottom: 10px;
     border-radius: 50%;
     object-fit: cover;
@@ -207,6 +213,7 @@ form {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    width: 600px;
 }
 
 .input-pair {
@@ -223,7 +230,22 @@ form {
     padding-top: 30px;
 }
 
-.logout-button {
-    width: 152px;
-    margin-top: 60px;
+.success-message {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: white;
+    color: #056608;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.success-message::before {
+    content: '✔';
+    font-size: 15px;
+    color: #056608;
 }

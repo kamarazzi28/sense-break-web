@@ -24,7 +24,7 @@
 /* Variants */
 
 .input-wrapper.outlined .input-field {
-    border: 2px solid #65558F;
+    border: 1px solid #65558F;
 }
 
 .input-wrapper.filled .input-field {
@@ -34,14 +34,14 @@
 
 .input-wrapper.standard .input-field {
     border: none;
-    border-bottom: 2px solid #ccc;
+    border-bottom: 1px solid #ccc;
     border-radius: 0;
 }
 
 .input-wrapper.disabled .input-field {
     background-color: #E3E3E4;
     color: #948D8f;
-    border: 2px solid #E3E3E4;
+    border: 1px solid #E3E3E4;
     cursor: not-allowed;
 }
 

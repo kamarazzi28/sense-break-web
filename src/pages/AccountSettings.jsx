@@ -1,72 +1,161 @@
+// noinspection JSCheckFunctionSignatures,t,JSIgnoredPromiseFromCall
+
 import '../index.css';
 import Title from '../components/Title/Title.jsx';
 import Input from '../components/InputFields/Input.jsx';
 import Button from '../components/Button/Button.jsx';
-import {useState} from 'react';
 import dayjs from 'dayjs';
+import {useEffect, useState} from 'react';
 import CustomSelect from "../components/CustomSelect/CustomSelect.jsx";
 import DatePicker from "../components/DatePicker/DatePicker.jsx";
 import {useNavigate} from "react-router-dom";
-import {getAuth, signOut} from "firebase/auth";
+import {getAuth, onAuthStateChanged, signOut} from "firebase/auth";
+import {doc, getDoc, setDoc} from "firebase/firestore";
+import {db} from '../firebase';
+import AvatarPreview from "../components/AvatarPreview/AvatarPreview.jsx";
 
+const AVATAR_PLACEHOLDER = "/images/figures/avatar_placeholder.svg";
 
 function AccountSettings() {
-    const [username, setUsername] = useState('Kami');
-    const [gender, setGender] = useState('');
-    const [location, setLocation] = useState('');
-    const [dateOfBirth, setDateOfBirth] = useState(null);
+    const [form, setForm] = useState({
+        username: '',
+        email: '',
+        gender: '',
+        location: '',
+        dateOfBirth: null,
+        avatarURL: AVATAR_PLACEHOLDER,
+    });
+    const [initialData, setInitialData] = useState(null);
+    const [selectedAvatarBase64, setSelectedAvatarBase64] = useState(null);
+    const [previewURL, setPreviewURL] = useState(AVATAR_PLACEHOLDER);
     const [errors, setErrors] = useState({});
+    const [user, setUser] = useState(null);
+    const [successMessage, setSuccessMessage] = useState('');
+    const [avatarMarkedForDeletion, setAvatarMarkedForDeletion] = useState(false);
+
+    const navigate = useNavigate();
+    const auth = getAuth();
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+            if (firebaseUser) setUser(firebaseUser);
+        });
+        return () => unsubscribe();
+    }, []);
+
+    useEffect(() => {
+        if (!user) return;
+        const fetchUserData = async () => {
+            const userRef = doc(db, 'users', user.uid);
+            const docSnap = await getDoc(userRef);
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                const loadedData = {
+                    username: data.username || '',
+                    email: data.email || '',
+                    gender: data.gender || '',
+                    location: data.location || '',
+                    dateOfBirth: data.dateOfBirth ? dayjs(data.dateOfBirth) : null,
+                    avatarURL: data.avatarURL || AVATAR_PLACEHOLDER
+                };
+                setForm(loadedData);
+                setInitialData(loadedData);
+                setPreviewURL(loadedData.avatarURL);
+            }
+        };
+        fetchUserData().catch(console.error);
+    }, [user]);
 
     const validate = () => {
         const newErrors = {};
-        if (username.length < 2) newErrors.username = 'Name must be at least 2 characters';
+        if (form.username.length < 2) newErrors.username = 'Name must be at least 2 characters';
         return newErrors;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const validationErrors = validate();
-        if (Object.keys(validationErrors).length > 0) {
+        if (Object.keys(validationErrors).length) {
             setErrors(validationErrors);
             return;
         }
-        console.log('Saved:', {username, gender, dateOfBirth, location});
+
+        try {
+            let avatarURL = form.avatarURL;
+
+            if (avatarMarkedForDeletion) {
+                avatarURL = AVATAR_PLACEHOLDER;
+            } else if (selectedAvatarBase64) {
+                avatarURL = selectedAvatarBase64;
+            }
+
+            const userDataToSave = {
+                ...form,
+                avatarURL,
+                dateOfBirth: form.dateOfBirth ? form.dateOfBirth.toISOString() : null
+            };
+
+            await setDoc(doc(db, 'users', user.uid), userDataToSave);
+
+            setForm(prev => ({...prev, avatarURL}));
+            setPreviewURL(avatarURL);
+            setInitialData({...userDataToSave});
+            setSelectedAvatarBase64(null);
+            setErrors({});
+            setAvatarMarkedForDeletion(false);
+            setSuccessMessage("Profile saved successfully!");
+            setTimeout(() => setSuccessMessage(''), 5000);
+        } catch (error) {
+            console.error("Save error:", error);
+        }
     };
 
     const handleDiscard = () => {
-        setUsername('Kamilla');
-        setGender('Female');
-        setLocation('Prague, Czechia');
-        setDateOfBirth(dayjs('2001-03-28'));
+        if (!initialData) return;
+
+        setForm({
+            ...initialData,
+            dateOfBirth: initialData.dateOfBirth ? dayjs(initialData.dateOfBirth) : null
+        });
+
+        setPreviewURL(initialData.avatarURL || AVATAR_PLACEHOLDER);
+        setSelectedAvatarBase64(null);
+        setAvatarMarkedForDeletion(false);
+
+        const input = document.getElementById('avatar-upload');
+        if (input) input.value = null;
     };
 
-    const auth = getAuth();
-    const navigate = useNavigate();
 
     const handleLogout = () => {
-        signOut(auth)
-            .then(() => {
-                navigate('/login'); // перенаправление на login
-            })
-            .catch((error) => {
-                console.error('Logout error:', error);
-            });
+        signOut(auth).then(() => navigate('/login')).catch(console.error);
     };
-
+    const handleChange = (key, value) => {
+        setForm(prev => ({...prev, [key]: value}));
+        if (errors[key]) {
+            setErrors(prev => ({...prev, [key]: undefined}));
+        }
+    };
 
     return (
         <>
             <Title name="Account Settings" text=""/>
+            {successMessage && <div className="success-message">{successMessage}</div>}
             <div className="account-settings-container">
                 <div className="account-group">
-                    <div className="account-avatar-box">
-                        <img src="/images/figures/avatar_placeholder.svg" alt="Avatar" className="avatar-preview"/>
-                        <Button name="Delete Avatar" color="secondary"/>
-                        <Button name="Upload New" color="purple"/>
-                        <div className="logout-button">
-                            <Button name="Log Out" color="red" onClick={handleLogout}/>
-                        </div>
-                    </div>
+                    <AvatarPreview
+                        initialURL={previewURL}
+                        onFileChange={(base64) => {
+                            setSelectedAvatarBase64(base64);
+                            setAvatarMarkedForDeletion(!base64); // если файл выбран — false, если удалён — true
+                        }}
+                        onDelete={() => {
+                            setAvatarMarkedForDeletion(true);
+                            setSelectedAvatarBase64(null);
+                        }}
+                        onLogout={handleLogout}
+                    />
+
                 </div>
 
                 <div className="account-group">
@@ -74,16 +163,16 @@ function AccountSettings() {
                         <div className="input-pair">
                             <Input
                                 label="Name"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
+                                value={form.username}
+                                onChange={(e) => handleChange('username', e.target.value)}
                                 error={errors.username}
                                 variant="outlined"
                                 placeholder="Your Name"
                             />
                             <CustomSelect
                                 label="Gender"
-                                value={gender}
-                                onChange={(e) => setGender(e.target.value)}
+                                value={form.gender}
+                                onChange={(e) => handleChange('gender', e.target.value)}
                                 options={[
                                     {value: 'Female', label: 'Female'},
                                     {value: 'Male', label: 'Male'},
@@ -96,34 +185,18 @@ function AccountSettings() {
                         <div className="input-pair">
                             <DatePicker
                                 label="Date of Birth"
-                                value={dateOfBirth}
-                                onChange={(newValue) => setDateOfBirth(newValue)}
+                                value={form.dateOfBirth}
+                                onChange={(newValue) => handleChange('dateOfBirth', newValue)}
                             />
                             <CustomSelect
                                 label="Location"
-                                value={location}
-                                onChange={(e) => setLocation(e.target.value)}
+                                value={form.location}
+                                onChange={(e) => handleChange('location', e.target.value)}
                                 options={[
                                     {value: 'Prague, Czechia', label: 'Prague, Czechia'},
                                     {value: 'Brno, Czechia', label: 'Brno, Czechia'},
-                                    {value: 'Ostrava, Czechia', label: 'Ostrava, Czechia'},
-                                    {value: 'Berlin, Germany', label: 'Berlin, Germany'},
-                                    {value: 'Munich, Germany', label: 'Munich, Germany'},
                                     {value: 'Vienna, Austria', label: 'Vienna, Austria'},
-                                    {value: 'Warsaw, Poland', label: 'Warsaw, Poland'},
-                                    {value: 'Krakow, Poland', label: 'Krakow, Poland'},
-                                    {value: 'Paris, France', label: 'Paris, France'},
-                                    {value: 'Lyon, France', label: 'Lyon, France'},
-                                    {value: 'Rome, Italy', label: 'Rome, Italy'},
-                                    {value: 'Milan, Italy', label: 'Milan, Italy'},
-                                    {value: 'Barcelona, Spain', label: 'Barcelona, Spain'},
-                                    {value: 'Madrid, Spain', label: 'Madrid, Spain'},
-                                    {value: 'London, UK', label: 'London, UK'},
-                                    {value: 'Manchester, UK', label: 'Manchester, UK'},
-                                    {value: 'New York, USA', label: 'New York, USA'},
-                                    {value: 'Los Angeles, USA', label: 'Los Angeles, USA'},
-                                    {value: 'Toronto, Canada', label: 'Toronto, Canada'},
-                                    {value: 'Other', label: 'Other'},
+                                    {value: 'Other', label: 'Other'}
                                 ]}
                                 placeholder="Not selected"
                                 variant="input"
@@ -131,16 +204,18 @@ function AccountSettings() {
                         </div>
                         <div className="input-pair">
                             <Input
+                                type="email"
                                 label="Email"
                                 helper="Email is linked to account and can’t be changed"
-                                variant="disabled"
-                                placeholder="ki28032000@gmail.com"
+                                placeholder={form.email || 'Your email'}
+                                disabled
                             />
                             <Input
+                                type="password"
                                 label="Password"
                                 helper="To change password go to settings"
-                                variant="disabled"
-                                placeholder="************"
+                                disabled
+                                value="***************"
                             />
                         </div>
                         <div className="button-row">
