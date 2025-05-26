@@ -4,31 +4,21 @@ import ImageCardSmall from "../components/ImageCard/ImageCardSmall.jsx";
 import {useNavigate} from "react-router-dom";
 import ImageCardLarge from "../components/ImageCard/ImageCardLarge.jsx";
 import StreakCard from "../components/StreakCard/StreakCard.jsx";
-import {doc, getDoc} from "firebase/firestore";
 import {useEffect, useState} from "react";
-import {auth, db} from "../firebase.js";
-import {onAuthStateChanged} from 'firebase/auth';
+import {getUserStats} from "../firebaseHelpers.js";
 
 function Dashboard() {
     const navigate = useNavigate();
-
     const [streakCount, setStreakCount] = useState(0);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                const userRef = doc(db, 'users', user.uid);
-                const docSnap = await getDoc(userRef);
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    setStreakCount(data.streak || 0);
-                }
+        // Load stats including streak
+        getUserStats().then(stats => {
+            if (stats && typeof stats.streak === 'number') {
+                setStreakCount(stats.streak);
             }
         });
-
-        return () => unsubscribe();
     }, []);
-
 
     return (
         <>
@@ -68,7 +58,7 @@ function Dashboard() {
                 />
             </div>
         </>
-    )
+    );
 }
 
 export default Dashboard;

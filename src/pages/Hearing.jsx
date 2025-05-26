@@ -2,6 +2,7 @@ import '../index.css';
 import Title from "../components/Title/Title.jsx";
 import TrainingCard from "../components/TrainingCard/TrainingCard.jsx";
 import ImageCardLarge from "../components/ImageCard/ImageCardLarge.jsx";
+import {onStartTraining} from "../firebaseHelpers.js";
 
 function Hearing() {
     return (
@@ -17,19 +18,22 @@ function Hearing() {
                     description="Listen to short sounds and guess which one is louder."
                     duration="~30–45 sec"
                     buttonColor="orange"
-                    onStart={() => console.log('Sound Level Guess started')}/>
+                    onStart={() => onStartTraining('hearing')}
+                />
                 <TrainingCard
                     title="Sound Detection"
                     description="Identify where the sound is coming from."
                     duration="~30–60 sec"
                     buttonColor="orange"
-                    onStart={() => console.log('Sound Detection started')}/>
+                    onStart={() => onStartTraining('hearing')}
+                />
                 <TrainingCard
                     title="Tone Matching"
                     description="Compare sounds and match their pitch."
                     duration="~60–120 sec"
                     buttonColor="orange"
-                    onStart={() => console.log('Tone Matching started')}/>
+                    onStart={() => onStartTraining('hearing')}
+                />
             </div>
             <ImageCardLarge
                 title="Ambient Noise Session"
@@ -42,7 +46,7 @@ function Hearing() {
                 }}
                 buttonText="Start Today’s Session"
                 buttonColor="green"
-                onClick={() => console.log('Start session')}
+                onClick={() => onStartTraining('relaxation')}
             />
         </>
     )

@@ -1,6 +1,6 @@
 import './StreakCard.css';
 
-function StreakCard({streakCount}) {
+function StreakCard({streakCount, noShadow = false}) {
     const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
     const today = new Date().getDay(); // Sunday = 0
     const correctedToday = today === 0 ? 6 : today - 1;
@@ -12,7 +12,7 @@ function StreakCard({streakCount}) {
     }
 
     return (
-        <div className="streak-card">
+        <div className={`streak-card ${noShadow ? 'no-shadow' : ''}`}>
             <img src="/images/figures/fire.png" alt="streak" className="streak-icon"/>
 
             <div className="streak-text">

@@ -49,3 +49,8 @@
     width: 20px;
     height: 20px;
 }
+
+.streak-card.no-shadow {
+    box-shadow: none;
+}
+
