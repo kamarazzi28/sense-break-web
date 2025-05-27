@@ -3,8 +3,10 @@ import Title from "../components/Title/Title.jsx";
 import TrainingCard from "../components/TrainingCard/TrainingCard.jsx";
 import ImageCardLarge from "../components/ImageCard/ImageCardLarge.jsx";
 import {onStartTraining} from "../firebaseHelpers.js";
+import {useNavigate} from "react-router-dom";
 
 function Hearing() {
+    const navigate = useNavigate();
     return (
         <>
             <Title
@@ -46,7 +48,7 @@ function Hearing() {
                 }}
                 buttonText="Start Today’s Session"
                 buttonColor="green"
-                onClick={() => onStartTraining('relaxation')}
+                onClick={() => navigate('/AmbientSounds')}
             />
         </>
     )

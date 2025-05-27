@@ -2,7 +2,12 @@ import {doc, getDoc, increment, onSnapshot, setDoc, updateDoc} from 'firebase/fi
 import {getAuth, signInWithPopup} from 'firebase/auth';
 import {auth, db, googleProvider} from './firebase';
 
-// ✅ Создание пользователя в коллекции "users", если не существует
+const formatRelaxationTime = (minutes) => {
+    const hr = Math.floor(minutes / 60);
+    const min = minutes % 60;
+    return `${hr > 0 ? `${hr} hr ` : ''}${min} min`;
+};
+
 export const createUserIfNotExists = async (user, username) => {
     const userRef = doc(db, 'users', user.uid);
     const snap = await getDoc(userRef);
@@ -19,7 +24,6 @@ export const createUserIfNotExists = async (user, username) => {
     }
 };
 
-// ✅ Авторизация через Google + редирект
 export const handleGoogleLogin = async () => {
     const result = await signInWithPopup(auth, googleProvider);
     const user = result.user;
@@ -27,7 +31,6 @@ export const handleGoogleLogin = async () => {
     window.location.href = '/';
 };
 
-// ✅ Запись тренировки (vision, hearing, relaxation)
 export const onStartTraining = async (type) => {
     const user = auth.currentUser;
     if (!user) return;
@@ -45,7 +48,7 @@ export const onStartTraining = async (type) => {
             sessionsByDate: {},
             lastActive: today,
             streak: {current: 1, longest: 1}
-        }, {merge: true});
+        });
     }
 
     const updates = {
@@ -55,15 +58,11 @@ export const onStartTraining = async (type) => {
 
     if (type === 'vision') updates.visionSessions = increment(1);
     if (type === 'hearing') updates.hearingSessions = increment(1);
-    if (type === 'relaxation') updates.relaxationMinutes = increment(15);
+    if (type === 'relaxation') updates.relaxationMinutes = increment(1); // по 1 минуте
 
-    await updateDoc(progressRef, {
-        "streak.current": newCurrent,
-        "streak.longest": newLongest
-    });
+    await updateDoc(progressRef, updates);
 };
 
-// ✅ Получение общей статистики
 export const getUserStats = async () => {
     const user = getAuth().currentUser;
     if (!user) return null;
@@ -71,29 +70,22 @@ export const getUserStats = async () => {
     const uid = user.uid;
     const docRef = doc(db, "progress", uid);
     const snap = await getDoc(docRef);
-
     if (!snap.exists()) return null;
 
     const data = snap.data();
-
     const vision = data.visionSessions || 0;
     const hearing = data.hearingSessions || 0;
     const relaxationMin = data.relaxationMinutes || 0;
     const total = vision + hearing;
 
-    const hr = Math.floor(relaxationMin / 60);
-    const min = relaxationMin % 60;
-    const relaxation = `${hr > 0 ? `${hr} hr ` : ''}${min} min`;
-
     return {
         total,
         vision,
         hearing,
-        relaxation
+        relaxation: formatRelaxationTime(relaxationMin)
     };
 };
 
-// ✅ Realtime обновление статистики на странице Progress
 export const listenToUserStats = (onUpdate) => {
     const user = getAuth().currentUser;
     if (!user) return;
@@ -110,15 +102,15 @@ export const listenToUserStats = (onUpdate) => {
         const relaxationMin = data.relaxationMinutes || 0;
         const total = vision + hearing;
 
-        const hr = Math.floor(relaxationMin / 60);
-        const min = relaxationMin % 60;
-        const relaxation = `${hr > 0 ? `${hr} hr ` : ''}${min} min`;
-
-        onUpdate({total, vision, hearing, relaxation});
+        onUpdate({
+            total,
+            vision,
+            hearing,
+            relaxation: formatRelaxationTime(relaxationMin)
+        });
     });
 };
 
-// ✅ Обновление streak один раз в день (после входа)
 export const updateStreakIfNeeded = async () => {
     const user = auth.currentUser;
     if (!user) return;

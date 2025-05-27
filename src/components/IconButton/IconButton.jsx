@@ -1,8 +1,13 @@
 import './IconButton.css';
 
-function IconButton({icon, onClick}) {
+function IconButton({type = 'button', children, onClick, icon, className = ''}) {
     return (
-        <button className="icon-button" onClick={onClick}>
+        <button
+            type={type}
+            onClick={onClick}
+            className={`icon-button ${className}`}
+        >
+            {children}
             {icon}
         </button>
     );

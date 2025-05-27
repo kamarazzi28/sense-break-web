@@ -6,6 +6,9 @@
     padding: 6px;
     cursor: pointer;
     border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: background-color 0.2s ease;
 }
 
@@ -21,4 +24,22 @@
 .icon-button svg {
     font-size: 24px;
     color: #4F378A;
+}
+
+.green-icon-button {
+    background-color: #45A19E !important;
+    border-radius: 50% !important;
+}
+
+.green-icon-button:hover {
+    background-color: #8CC5C3 !important;
+}
+
+.green-icon-button:active {
+    transform: scale(0.98);
+}
+
+.green-icon-button svg {
+    color: white !important;
+    font-size: 30px;
 }

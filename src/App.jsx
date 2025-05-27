@@ -10,6 +10,7 @@ import Login from './pages/Login.jsx';
 import Register from "./pages/Register.jsx";
 import AccountSettings from "./pages/AccountSettings.jsx";
 import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx';
+import AmbientSounds from "./pages/AmbientSounds.jsx";
 
 function App() {
     return (
@@ -31,6 +32,7 @@ function App() {
                 <Route path="notifications" element={<Notifications/>}/>
                 <Route path="settings" element={<Settings/>}/>
                 <Route path="accountSettings" element={<AccountSettings/>}/>
+                <Route path="ambientSounds" element={<AmbientSounds/>}/>
             </Route>
         </Routes>
     );

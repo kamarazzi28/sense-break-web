@@ -1,0 +1,39 @@
+.ambient-card {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    height: 350px;
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.ambient-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.ambient-card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.ambient-info {
+    max-width: 70%;
+}
+
+.ambient-info h3 {
+    margin: 0 0 6px 0;
+    font-size: 18px;
+}
+
+.ambient-info p {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+}
