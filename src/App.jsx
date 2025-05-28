@@ -11,6 +11,8 @@ import Register from "./pages/Register.jsx";
 import AccountSettings from "./pages/AccountSettings.jsx";
 import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx';
 import AmbientSounds from "./pages/AmbientSounds.jsx";
+import {TrackingDot} from "./pages/trainings/vision/TrackingDot.jsx";
+import TrainingLayout from "./pages/trainings/TrainingLayout.jsx";
 
 function App() {
     return (
@@ -19,12 +21,25 @@ function App() {
             <Route path="/login" element={<Login/>}/>
             <Route path="/register" element={<Register/>}/>
 
-            {/* Protected app routes */}
-            <Route path="/" element={
+            {/* Protected pages with TrainingLayout (full screen) */}
+            <Route path="/trainings" element={
                 <PrivateRoute>
-                    <Layout/>
+                    <TrainingLayout/>
                 </PrivateRoute>
             }>
+                <Route path="vision/tracking-dot" element={<TrackingDot/>}/>
+            </Route>
+
+
+            {/* Protected pages with Layout */}
+            <Route
+                path="/"
+                element={
+                    <PrivateRoute>
+                        <Layout/>
+                    </PrivateRoute>
+                }
+            >
                 <Route index element={<Dashboard/>}/>
                 <Route path="vision" element={<Vision/>}/>
                 <Route path="hearing" element={<Hearing/>}/>
@@ -35,6 +50,7 @@ function App() {
                 <Route path="ambientSounds" element={<AmbientSounds/>}/>
             </Route>
         </Routes>
+
     );
 }
 

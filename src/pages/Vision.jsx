@@ -3,8 +3,10 @@ import '../index.css';
 import TrainingCard from "../components/TrainingCard/TrainingCard.jsx";
 import Title from "../components/Title/Title.jsx";
 import {onStartTraining} from "../firebaseHelpers.js";
+import {useNavigate} from "react-router-dom";
 
 function Vision() {
+    const navigate = useNavigate();
     return (
         <>
             <Title
@@ -18,7 +20,11 @@ function Vision() {
                     description="Follow the moving dot across the screen"
                     duration="~30–45 sec"
                     buttonColor="purple"
-                    onStart={() => onStartTraining('vision')}/>
+                    onStart={() => {
+                        onStartTraining({type: 'vision'});
+                        navigate('/trainings/vision/tracking-dot');
+                    }}
+                />
                 <TrainingCard
                     title="Blinking Prompt"
                     description="Blink when prompted to relax eye muscles"

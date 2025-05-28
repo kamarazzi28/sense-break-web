@@ -39,36 +39,37 @@ function Sidebar() {
     return (
         <div className={`sidebar-wrapper ${collapsed ? 'collapsed' : ''}`}>
             <div className="sidebar">
-                <div className="sidebar-header">
-                    {!collapsed && (
-                        <div className="sidebar-title">
-                            <img src="/images/logo/sb_logo_with_white_bg.svg" alt="Logo" className="sidebar-logo"/>
-                            {!collapsed && <span>Sense Break</span>}
-                        </div>
-                    )}
-                    <button className="collapse-btn" onClick={() => setCollapsed(!collapsed)}>
-                        {collapsed ? <ArrowRightFromLine size={22}/> : <ArrowLeftFromLine size={22}/>}
-                    </button>
-                </div>
+                <div className="sidebar-layout">
+                    <div className="sidebar-header">
+                        {!collapsed && (
+                            <div className="sidebar-title">
+                                <img src="/images/logo/sb_logo_with_white_bg.svg" alt="Logo" className="sidebar-logo"/>
+                                {!collapsed && <span>Sense Break</span>}
+                            </div>
+                        )}
+                        <button className="collapse-btn" onClick={() => setCollapsed(!collapsed)}>
+                            {collapsed ? <ArrowRightFromLine size={22}/> : <ArrowLeftFromLine size={22}/>}
+                        </button>
+                    </div>
 
-                <div className="sidebar-buttons">
-                    {topNav.map((item) => {
-                        const isActive = location.pathname === item.path;
-                        return (
-                            <Button
-                                disableRipple
-                                key={item.label}
-                                startIcon={item.icon}
-                                onClick={() => navigate(item.path)}
-                                className={`sidebar-btn ${isActive ? 'active' : ''}`}
-                                fullWidth={!collapsed}
-                            >
-                                {!collapsed && item.label}
-                            </Button>
-                        );
-                    })}
+                    <div className="sidebar-buttons">
+                        {topNav.map((item) => {
+                            const isActive = location.pathname === item.path;
+                            return (
+                                <Button
+                                    disableRipple
+                                    key={item.label}
+                                    startIcon={item.icon}
+                                    onClick={() => navigate(item.path)}
+                                    className={`sidebar-btn ${isActive ? 'active' : ''}`}
+                                    fullWidth={!collapsed}
+                                >
+                                    {!collapsed && item.label}
+                                </Button>
+                            );
+                        })}
+                    </div>
                 </div>
-
                 <div className="sidebar-settings">
                     <Button
                         disableRipple

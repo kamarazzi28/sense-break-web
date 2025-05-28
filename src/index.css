@@ -1,9 +1,16 @@
 /* ===== GLOBAL STYLES ===== */
 
 body {
-    height: 100vh;
+    height: 100%;
     margin: 0;
-    background: linear-gradient(#8e54e9cc 0%, #ffb199cc 75%);
+    padding: 0;
+    background: linear-gradient(#8e54e9cc 0%, #ffb199cc 75%) no-repeat;
+    background-size: cover;
+    overflow: hidden;
+}
+
+#root {
+    height: 100%;
 }
 
 /* ===== MAIN LAYOUT CONTAINER ===== */

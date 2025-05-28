@@ -1,6 +1,6 @@
 .sidebar {
     width: 320px;
-    height: 100%;
+    height: calc(100vh - 65px);
     padding: 30px 30px;
     display: flex;
     flex-direction: column;
@@ -9,6 +9,12 @@
     border-radius: 12px;
     position: relative;
     transition: all 0.3s ease;
+}
+
+.sidebar-layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 /* свернутое состояние контейнера */
@@ -39,7 +45,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
 }
 
 .sidebar-logo {
