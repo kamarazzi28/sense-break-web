@@ -1,8 +1,9 @@
 import './ConfirmModal.css';
 import Button from '../Button/Button.jsx';
+import ReactDOM from "react-dom";
 
 function ConfirmModal({title, message, onConfirm, onCancel}) {
-    return (
+    return ReactDOM.createPortal(
         <div className="modal-backdrop">
             <div className="modal">
                 <h3 className="modal-title">{title}</h3>
@@ -12,7 +13,8 @@ function ConfirmModal({title, message, onConfirm, onCancel}) {
                     <Button name="Cancel" color="purple" onClick={onCancel}/>
                 </div>
             </div>
-        </div>
+        </div>,
+        document.getElementById('modal-root')
     );
 }
 
