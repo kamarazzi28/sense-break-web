@@ -3,7 +3,6 @@ import './AmbientCard.css';
 import IconButton from "../IconButton/IconButton.jsx";
 import {Pause, Play} from "lucide-react";
 import {getCurrentTitle, playAudio, resumeAudioIfNeeded, stopAudio, subscribeToTime} from "../../audioManager";
-import {onStartTraining} from "../../firebaseHelpers";
 
 function AmbientCard({title, description, image, audioSrc}) {
     const [isPlaying, setIsPlaying] = useState(false);
@@ -21,7 +20,7 @@ function AmbientCard({title, description, image, audioSrc}) {
             stopAudio();
             setIsPlaying(false);
         } else {
-            playAudio(title, audioSrc, () => onStartTraining('relaxation'));
+            playAudio(title, audioSrc);
             setIsPlaying(true);
         }
     };

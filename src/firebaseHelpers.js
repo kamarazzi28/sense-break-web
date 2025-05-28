@@ -58,10 +58,14 @@ export const onStartTraining = async (type) => {
 
     if (type === 'vision') updates.visionSessions = increment(1);
     if (type === 'hearing') updates.hearingSessions = increment(1);
-    if (type === 'relaxation') updates.relaxationMinutes = increment(1); // по 1 минуте
+    if (type === 'relaxation') {
+        updates.relaxationMinutes = increment(1);
+        updates[`sessionsByDate.${today}.relaxation`] = increment(1);
+    }
 
     await updateDoc(progressRef, updates);
 };
+
 
 export const getUserStats = async () => {
     const user = getAuth().currentUser;
