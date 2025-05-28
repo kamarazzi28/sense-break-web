@@ -1,23 +1,30 @@
-// noinspection JSIgnoredPromiseFromCall
-
 let currentAudio = null;
 let currentTitle = '';
-let interval = null;
+let startTime = null;
 let onTick = () => {
 };
+let interval = null;
 
-export function playAudio(title, audioSrc, onTimeTick) {
-    stopAudio(); // Остановить предыдущее
+// подписчики (например AmbientCard)
+const timeListeners = [];
+
+export function playAudio(title, audioSrc, tickHandler) {
+    stopAudio();
 
     currentTitle = title;
     currentAudio = new Audio(audioSrc);
     currentAudio.loop = true;
-    currentAudio.play();
+    currentAudio.play().catch(e => {
+        console.error('Playback error:', e);
+    });
 
-    onTick = onTimeTick;
+    startTime = Date.now();
+    onTick = tickHandler;
+
     interval = setInterval(() => {
-        onTick(1); // каждый тик 1 минута симуляции (можно изменить на 1 сек = 1 мин в тренировочном режиме)
-    }, 30000); // 1 минута
+        const minutes = Math.floor((Date.now() - startTime) / 60000);
+        timeListeners.forEach(fn => fn(minutes));
+    }, 3000); // обновление каждые 3 сек
 }
 
 export function stopAudio() {
@@ -25,13 +32,39 @@ export function stopAudio() {
         currentAudio.pause();
         currentAudio = null;
     }
-    if (interval) {
-        clearInterval(interval);
-        interval = null;
-    }
+    clearInterval(interval);
+    interval = null;
+    startTime = null;
     currentTitle = '';
+    timeListeners.forEach(fn => fn(0));
 }
 
 export function getCurrentTitle() {
     return currentTitle;
+}
+
+export function getCurrentMinutes() {
+    if (!startTime) return 0;
+    return Math.floor((Date.now() - startTime) / 60000);
+}
+
+export function resumeAudioIfNeeded(tickHandler) {
+    if (currentAudio && currentTitle) {
+        onTick = tickHandler;
+        interval = setInterval(() => {
+            const minutes = Math.floor((Date.now() - startTime) / 60000);
+            timeListeners.forEach(fn => fn(minutes));
+        }, 3000);
+        return currentTitle;
+    }
+    return null;
+}
+
+export function subscribeToTime(fn) {
+    timeListeners.push(fn);
+    fn(getCurrentMinutes());
+    return () => {
+        const idx = timeListeners.indexOf(fn);
+        if (idx !== -1) timeListeners.splice(idx, 1);
+    };
 }

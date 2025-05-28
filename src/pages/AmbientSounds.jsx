@@ -14,9 +14,9 @@ function AmbientSounds() {
     return (
         <>
             <Title
-                name="Your Ambient Sounds"
-                text={`Take a mindful break with ambient nature sounds.
-                \nUse headphones for better experience. Start, relax, and refocus.`}
+                name="Escape the noise of the day with soothing nature sounds."
+                text={`Press play, close your eyes, and let your mind drift.
+\nHeadphones recommended for the full experience.`}
             />
             <div className="ambient-cards">
                 <AmbientCard
@@ -25,7 +25,7 @@ function AmbientSounds() {
                     onToggle={handleToggle}
                     title="Birdsong Morning"
                     description="Calm morning with birds chirping around you."
-                    image="/images/pics/birds.jpg"
+                    image="/images/pics/birds.png"
                     audioSrc="/sounds/morning-birds.wav"
                 />
 
@@ -35,7 +35,7 @@ function AmbientSounds() {
                     onToggle={handleToggle}
                     title="Forest Rain"
                     description="Gentle rain falling through a quiet forest."
-                    image="/images/pics/rain.jpg"
+                    image="/images/pics/rain.png"
                     audioSrc="/sounds/rain-long-loop.wav"
                 />
 
@@ -45,7 +45,7 @@ function AmbientSounds() {
                     onToggle={handleToggle}
                     title="Ocean Waves"
                     description="Soothing sounds of waves crashing ashore."
-                    image="/images/pics/ocean.jpg"
+                    image="/images/pics/ocean.png"
                     audioSrc="/sounds/waves.wav"
                 />
             </div>
