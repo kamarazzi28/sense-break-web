@@ -12,13 +12,13 @@ function Dashboard() {
     const [streakCount, setStreakCount] = useState(0);
 
     useEffect(() => {
-        // Load stats including streak
         getUserStats().then(stats => {
-            if (stats && typeof stats.streak === 'number') {
-                setStreakCount(stats.streak);
+            if (stats?.streak?.current !== undefined) {
+                setStreakCount(stats.streak.current);
             }
         });
     }, []);
+
 
     return (
         <>

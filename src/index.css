@@ -304,6 +304,10 @@ form {
 }
 
 .streak-wide {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
     width: 600px;
     background-color: white;
     padding: 20px;

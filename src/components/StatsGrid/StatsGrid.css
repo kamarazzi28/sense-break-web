@@ -39,3 +39,24 @@
     width: 600px;
     height: 100px;
 }
+
+.stat-wide-card {
+    padding: 10px;
+    flex: 1;
+    height: 100px;
+    text-align: center;
+    width: 200px;
+}
+
+.stat-wide-card .label {
+    font-size: 14px;
+    color: #6a6a6a;
+    margin-bottom: 5px;
+    line-height: 14px;
+}
+
+.stat-wide-card .value {
+    font-size: 22px;
+    line-height: 22px;
+    font-weight: bold;
+}

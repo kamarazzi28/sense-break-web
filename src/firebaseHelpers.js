@@ -1,3 +1,5 @@
+// noinspection JSCheckFunctionSignatures
+
 import {doc, getDoc, increment, onSnapshot, setDoc, updateDoc} from 'firebase/firestore';
 import {getAuth, signInWithPopup} from 'firebase/auth';
 import {auth, db, googleProvider} from './firebase';
@@ -64,8 +66,8 @@ export const onStartTraining = async (type) => {
     }
 
     await updateDoc(progressRef, updates);
+    await updateStreakIfNeeded();
 };
-
 
 export const getUserStats = async () => {
     const user = getAuth().currentUser;
@@ -77,6 +79,7 @@ export const getUserStats = async () => {
     if (!snap.exists()) return null;
 
     const data = snap.data();
+    const streak = data.streak || {current: 0, longest: 0};
     const vision = data.visionSessions || 0;
     const hearing = data.hearingSessions || 0;
     const relaxationMin = data.relaxationMinutes || 0;
@@ -86,7 +89,11 @@ export const getUserStats = async () => {
         total,
         vision,
         hearing,
-        relaxation: formatRelaxationTime(relaxationMin)
+        relaxation: formatRelaxationTime(relaxationMin),
+        streak: {
+            current: streak.current || 0,
+            longest: streak.longest || 0
+        }
     };
 };
 
@@ -110,7 +117,12 @@ export const listenToUserStats = (onUpdate) => {
             total,
             vision,
             hearing,
-            relaxation: formatRelaxationTime(relaxationMin)
+            relaxation: formatRelaxationTime(relaxationMin),
+            streak: {
+                current: data.streak?.current || 0,
+                longest: data.streak?.longest || 0
+            }
+
         });
     });
 };
@@ -134,15 +146,23 @@ export const updateStreakIfNeeded = async () => {
     const todayData = sessionsByDate[today];
     const yesterdayData = sessionsByDate[yesterday];
 
-    const didTrainToday =
-        todayData && (todayData.vision > 0 || todayData.hearing > 0);
+    // už byl dnes trénink – streak se už zapsal
+    if (todayData && (todayData.vision || todayData.hearing)) {
+        return; // streak se dnes už nastavil
+    }
 
-    if (!didTrainToday) return;
+    // začátek nového dne – nebyl včera trénink → streak = 0
+    if (!yesterdayData || (!yesterdayData.vision && !yesterdayData.hearing)) {
+        if (streak.current !== 0) {
+            await updateDoc(progressRef, {
+                'streak.current': 0
+            });
+        }
+        return;
+    }
 
-    const continuedStreak =
-        yesterdayData && (yesterdayData.vision > 0 || yesterdayData.hearing > 0);
-
-    const newCurrent = continuedStreak ? streak.current + 1 : 1;
+    // První trénink dne – včera byl trénink → zvýšit streak
+    const newCurrent = streak.current + 1;
     const newLongest = Math.max(newCurrent, streak.longest || 0);
 
     await updateDoc(progressRef, {
@@ -150,3 +170,5 @@ export const updateStreakIfNeeded = async () => {
         'streak.longest': newLongest
     });
 };
+
+
