@@ -10,11 +10,12 @@ const formatRelaxationTime = (minutes) => {
     return `${hr > 0 ? `${hr} hr ` : ''}${min} min`;
 };
 
+// ✅ Create user and progress document if not exists
 export const createUserIfNotExists = async (user, username) => {
     const userRef = doc(db, 'users', user.uid);
-    const snap = await getDoc(userRef);
+    const userSnap = await getDoc(userRef);
 
-    if (!snap.exists()) {
+    if (!userSnap.exists()) {
         await setDoc(userRef, {
             username: username || user.displayName || '',
             email: user.email,
@@ -23,9 +24,29 @@ export const createUserIfNotExists = async (user, username) => {
             trainings: [],
             avatarURL: "/images/figures/avatar_placeholder.svg"
         });
+        console.log("✅ New user created");
+    }
+
+    const progressRef = doc(db, 'progress', user.uid);
+    const progressSnap = await getDoc(progressRef);
+
+    if (!progressSnap.exists()) {
+        const today = new Date().toISOString().slice(0, 10);
+        await setDoc(progressRef, {
+            visionSessions: 0,
+            hearingSessions: 0,
+            relaxationMinutes: 0,
+            sessionsByDate: {
+                [today]: {vision: 0, hearing: 0}
+            },
+            lastActive: today,
+            streak: {current: 0, longest: 0}
+        });
+        console.log("✅ Progress initialized for new user");
     }
 };
 
+// ✅ Sign in with Google and create user if needed
 export const handleGoogleLogin = async () => {
     const result = await signInWithPopup(auth, googleProvider);
     const user = result.user;
@@ -33,6 +54,7 @@ export const handleGoogleLogin = async () => {
     window.location.href = '/';
 };
 
+// ✅ Track training session
 export const onStartTraining = async (type) => {
     const user = auth.currentUser;
     if (!user) return;
@@ -42,16 +64,7 @@ export const onStartTraining = async (type) => {
     const progressRef = doc(db, 'progress', uid);
 
     const progressSnap = await getDoc(progressRef);
-    if (!progressSnap.exists()) {
-        await setDoc(progressRef, {
-            visionSessions: 0,
-            hearingSessions: 0,
-            relaxationMinutes: 0,
-            sessionsByDate: {},
-            lastActive: today,
-            streak: {current: 1, longest: 1}
-        });
-    }
+    if (!progressSnap.exists()) return;
 
     const updates = {
         lastActive: today,
@@ -60,15 +73,50 @@ export const onStartTraining = async (type) => {
 
     if (type === 'vision') updates.visionSessions = increment(1);
     if (type === 'hearing') updates.hearingSessions = increment(1);
-    if (type === 'relaxation') {
-        updates.relaxationMinutes = increment(1);
-        updates[`sessionsByDate.${today}.relaxation`] = increment(1);
-    }
+    if (type === 'relaxation') updates.relaxationMinutes = increment(1);
 
     await updateDoc(progressRef, updates);
-    await updateStreakIfNeeded();
+    console.log(`✅ ${type} training recorded for ${today}`);
 };
 
+// ✅ Update streak (only once per day)
+export const updateStreak = async () => {
+    const user = auth.currentUser;
+    if (!user) return;
+
+    const uid = user.uid;
+    const today = new Date().toISOString().slice(0, 10);
+    const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+    const progressRef = doc(db, 'progress', uid);
+    const snap = await getDoc(progressRef);
+    if (!snap.exists()) return;
+
+    const data = snap.data();
+    const sessionsByDate = data.sessionsByDate || {};
+    const streak = data.streak || {current: 0, longest: 0};
+
+    const yesterdayData = sessionsByDate[yesterday];
+
+    // ✅ Skip if streak already updated today
+    if (data.lastActive === today && streak.current > 0) {
+        console.log("⏩ Streak already updated today");
+        return;
+    }
+
+    const hadActivityYesterday = yesterdayData && (yesterdayData.vision || yesterdayData.hearing);
+    const newCurrent = hadActivityYesterday ? streak.current + 1 : 1;
+    const newLongest = Math.max(newCurrent, streak.longest || 0);
+
+    await updateDoc(progressRef, {
+        'streak.current': newCurrent,
+        'streak.longest': newLongest
+    });
+
+
+    console.log(`🔥 Streak updated: current = ${newCurrent}, longest = ${newLongest}`);
+};
+
+// ✅ Get user stats (one-time fetch)
 export const getUserStats = async () => {
     const user = getAuth().currentUser;
     if (!user) return null;
@@ -97,6 +145,7 @@ export const getUserStats = async () => {
     };
 };
 
+// ✅ Listen to user stats in real-time
 export const listenToUserStats = (onUpdate) => {
     const user = getAuth().currentUser;
     if (!user) return;
@@ -122,53 +171,6 @@ export const listenToUserStats = (onUpdate) => {
                 current: data.streak?.current || 0,
                 longest: data.streak?.longest || 0
             }
-
         });
     });
 };
-
-export const updateStreakIfNeeded = async () => {
-    const user = auth.currentUser;
-    if (!user) return;
-
-    const uid = user.uid;
-    const progressRef = doc(db, 'progress', uid);
-    const snap = await getDoc(progressRef);
-    if (!snap.exists()) return;
-
-    const data = snap.data();
-    const sessionsByDate = data.sessionsByDate || {};
-    const streak = data.streak || {current: 0, longest: 0};
-
-    const today = new Date().toISOString().slice(0, 10);
-    const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
-
-    const todayData = sessionsByDate[today];
-    const yesterdayData = sessionsByDate[yesterday];
-
-    // už byl dnes trénink – streak se už zapsal
-    if (todayData && (todayData.vision || todayData.hearing)) {
-        return; // streak se dnes už nastavil
-    }
-
-    // začátek nového dne – nebyl včera trénink → streak = 0
-    if (!yesterdayData || (!yesterdayData.vision && !yesterdayData.hearing)) {
-        if (streak.current !== 0) {
-            await updateDoc(progressRef, {
-                'streak.current': 0
-            });
-        }
-        return;
-    }
-
-    // První trénink dne – včera byl trénink → zvýšit streak
-    const newCurrent = streak.current + 1;
-    const newLongest = Math.max(newCurrent, streak.longest || 0);
-
-    await updateDoc(progressRef, {
-        'streak.current': newCurrent,
-        'streak.longest': newLongest
-    });
-};
-
-

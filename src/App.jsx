@@ -11,7 +11,7 @@ import Register from "./pages/Register.jsx";
 import AccountSettings from "./pages/AccountSettings.jsx";
 import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx';
 import AmbientSounds from "./pages/AmbientSounds.jsx";
-import {TrackingDot} from "./pages/trainings/vision/TrackingDot.jsx";
+import TrackingDot from "./pages/trainings/vision/TrackingDot.jsx";
 import TrainingLayout from "./pages/trainings/TrainingLayout.jsx";
 
 function App() {

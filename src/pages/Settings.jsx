@@ -119,6 +119,8 @@ function Settings() {
                     title="Are you sure?"
                     message="This action will permanently delete your account."
                     onConfirm={confirmAccountDeletion}
+                    nameRed="Delete"
+                    namePurple="Cancel"
                     onCancel={() => setShowConfirmDialog(false)}
                 />
             )}

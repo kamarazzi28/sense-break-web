@@ -1,0 +1,17 @@
+.training-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 31px 15px;
+    height: 50px;
+    position: relative;
+}
+
+.training-header .timer {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+    font-weight: 500;
+    color: #4F378A;
+}

@@ -21,7 +21,6 @@ function Vision() {
                     duration="~30–45 sec"
                     buttonColor="purple"
                     onStart={() => {
-                        onStartTraining({type: 'vision'});
                         navigate('/trainings/vision/tracking-dot');
                     }}
                 />

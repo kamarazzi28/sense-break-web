@@ -3,7 +3,6 @@ import Sidebar from '../components/Sidebar/Sidebar';
 import Header from '../components/Header/Header';
 import {Outlet} from 'react-router-dom';
 import '../index.css';
-import {updateStreakIfNeeded} from "../firebaseHelpers.js";
 
 function Layout() {
     const [collapsed, setCollapsed] = useState(false);
@@ -16,7 +15,6 @@ function Layout() {
 
         handleResize(); // Initial check
         window.addEventListener('resize', handleResize);
-        updateStreakIfNeeded();
 
         return () => window.removeEventListener('resize', handleResize);
     }, []);

@@ -1,0 +1,17 @@
+.training-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 28px;
+    padding: 12px 0;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.training-controls .circle-button {
+    border-radius: 50%;
+    border: 2px solid #5E3CBA;
+    padding: 6px;
+}
