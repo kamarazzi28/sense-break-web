@@ -27,11 +27,8 @@ Aplikace je nasazena pomocí Firebase Hosting:
 
 - 🧾 Registrace & přihlášení (Firebase Authentication, Google Login)
 - 👁️ Zrakový trénink (Canvas nebo SVG animace)
-- 🔊 Sluchový trénink (Audio API, rozpoznávání tónů)
 - 📈 Přehled pokroku, streak systém
-- 🔔 Notifikace – připomenutí tréninku
 - 🌐 Detekce offline režimu
-- 🎨 Responzivní design (desktop, tablet, mobil)
 - 🖼️ Nahrání a správa avatara (Firebase Storage)
 - 🛠️ Nastavení účtu (username, avatar, gender)
 
