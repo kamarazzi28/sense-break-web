@@ -34,7 +34,9 @@ function Dashboard() {
                     }}
                     buttonText="Start Today’s Session"
                     buttonColor="purple"
-                    onClick={() => console.log('Start session')}
+                    onClick={() => {
+                        navigate('/trainings/vision/tracking-dot');
+                    }}
                 />
                 <StreakCard streakCount={streakCount}/>
             </div>

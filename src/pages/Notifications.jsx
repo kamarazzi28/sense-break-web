@@ -7,6 +7,9 @@ import {useState} from "react";
 
 function Notifications() {
     const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+    const [communicationsEmailsEnabled, setCommunicationsEmailsEnabled] = useState(true);
+    const [updatesEnabled, setUpdatesEnabled] = useState(true);
+    const [allNotificationsDisabled, setAllNotificationsDisabled] = useState(true);
     const [reminder, setReminder] = useState('');
 
     return (
@@ -47,8 +50,8 @@ function Notifications() {
                     description="Receive monthly overviews of your training progress"
                     rightElement={
                         <Toggle
-                            isOn={notificationsEnabled}
-                            onToggle={() => setNotificationsEnabled(!notificationsEnabled)}
+                            isOn={communicationsEmailsEnabled}
+                            onToggle={() => setCommunicationsEmailsEnabled(!communicationsEmailsEnabled)}
                         />
                     }
                 />
@@ -57,8 +60,8 @@ function Notifications() {
                     description="Be the first to know about new features and improvements"
                     rightElement={
                         <Toggle
-                            isOn={notificationsEnabled}
-                            onToggle={() => setNotificationsEnabled(!notificationsEnabled)}
+                            isOn={updatesEnabled}
+                            onToggle={() => setUpdatesEnabled(!updatesEnabled)}
                         />
                     }
                 />
@@ -70,8 +73,8 @@ function Notifications() {
                     description="Turn off all audio alerts and reminders"
                     rightElement={
                         <Toggle
-                            isOn={notificationsEnabled}
-                            onToggle={() => setNotificationsEnabled(!notificationsEnabled)}
+                            isOn={allNotificationsDisabled}
+                            onToggle={() => setAllNotificationsDisabled(!allNotificationsDisabled)}
                         />
                     }
                 />

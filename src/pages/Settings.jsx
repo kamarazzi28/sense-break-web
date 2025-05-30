@@ -94,15 +94,6 @@ function Settings() {
                     }
                 />
                 <FeatureRow
-                    title="Recovery Email"
-                    description="Update your recovery email address"
-                    rightElement={
-                        <IconButton onClick={() => console.log('Navigate to recovery settings')}>
-                            <ChevronRightIcon size={20}/>
-                        </IconButton>
-                    }
-                />
-                <FeatureRow
                     title="Delete Account"
                     titleColor="#B3261E"
                     description="Permanently delete your account and all related data. This action cannot be undone."
