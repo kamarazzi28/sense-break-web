@@ -11,7 +11,7 @@ import {auth, db} from "../firebase";
 import {deleteUser, EmailAuthProvider, onAuthStateChanged, reauthenticateWithCredential} from "firebase/auth";
 import {deleteDoc, doc} from "firebase/firestore";
 import {useNavigate} from "react-router-dom";
-import ConfirmModal from "../components/Modal/ConfirmModal.jsx";
+import ConfirmModal from "../components/Modal/ConfirmModal/ConfirmModal.jsx";
 
 
 function Settings() {

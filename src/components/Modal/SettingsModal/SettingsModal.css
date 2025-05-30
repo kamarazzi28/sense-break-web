@@ -1,0 +1,48 @@
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.settings-modal {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    min-width: 300px;
+    max-width: 400px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+    font-size: 16px;
+    font-weight: 500;
+    color: #4F378A;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+.setting-row label {
+    font-size: 16px;
+    color: #4F378A;
+    min-width: 130px; /* или подбери оптимально */
+    text-align: left;
+}
+

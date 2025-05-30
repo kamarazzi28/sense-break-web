@@ -1,5 +1,5 @@
 import './ConfirmModal.css';
-import Button from '../Button/Button.jsx';
+import Button from '../../Button/Button.jsx';
 import ReactDOM from "react-dom";
 
 function ConfirmModal({title, message, nameRed, namePurple, onConfirm, onCancel}) {

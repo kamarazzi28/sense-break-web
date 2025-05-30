@@ -3,7 +3,7 @@ import '../../index.css';
 import './TrainingLayout.css';
 import TrainingHeader from "../../components/TrainingHeader/TrainingHeader.jsx";
 import {useState} from "react";
-import ConfirmModal from "../../components/Modal/ConfirmModal.jsx";
+import ConfirmModal from "../../components/Modal/ConfirmModal/ConfirmModal.jsx";
 
 function TrainingLayout() {
     const [showConfirmDialog, setShowConfirmDialog] = useState(false);

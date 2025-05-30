@@ -1,0 +1,37 @@
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: white;
+    padding: 24px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 380px;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.modal-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.modal-message {
+    font-size: 14px;
+    color: #444;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 24px;
+}
+
