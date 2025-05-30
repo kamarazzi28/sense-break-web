@@ -36,18 +36,6 @@ function Vision() {
                     duration="~30–40 sec"
                     buttonColor="purple"
                     onStart={() => onStartTraining('vision')}/>
-                <TrainingCard
-                    title="Grid Tracking"
-                    description="Track the moving shape across a grid"
-                    duration="~45-60 sec"
-                    buttonColor="purple"
-                    onStart={() => onStartTraining('vision')}/>
-                <TrainingCard
-                    title="Color Blink"
-                    description="Blink only when a target color appears"
-                    duration="~20–30 sec"
-                    buttonColor="purple"
-                    onStart={() => onStartTraining('vision')}/>
             </div>
         </>
     )
